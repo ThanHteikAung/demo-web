@@ -3,6 +3,8 @@ import { campsitesReducer } from '../features/campsites/CampsitesSlice';
 import { commentsReducer } from '../features/comment/CommentsSlice';
 import { partnersReducer } from '../features/partners/partnersSlice';
 import { promotionsReducer} from '../app/promotrions/promotionsSlice';
+import logger from 'redux-logger';
+
 
 
 export const store = configureStore({
@@ -11,6 +13,7 @@ export const store = configureStore({
         comments: commentsReducer,
         partners: partnersReducer,
         promotions: promotionsReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([logger])
 });
 
