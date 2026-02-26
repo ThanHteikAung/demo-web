@@ -5,6 +5,9 @@ import AnimatedDisplayCard from './AnimatedDisplayCard';
 import { selectFeaturedCampsite } from '../../features/campsites/CampsitesSlice';
 import { selectFeaturedPromotion } from '../promotrions/promotionsSlice';
 import { selectFeaturedPartner } from '../../features/partners/partnersSlice';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+
 
 const DisplayList = () => {
     const items = useSelector((state) => [
@@ -18,15 +21,23 @@ const DisplayList = () => {
     return (
         <Row>
             {items.map((item, idx) => {
+                const { featuredItem, isLoading, errMsg } = item;
+                if (isLoading) {
+                    return <Loading key={idx} />;
+                }
+                if (errMsg) {
+                    return <Error errMsg={errMsg} key={idx} />;
+                }
                 return (
-                    item && (
+                    featuredItem && (
                         <Col md className='m-1' key={idx}>
-                            <AnimatedDisplayCard item={item} />
+                            <AnimatedDisplayCard item={featuredItem} />
                         </Col>
                     )
                 );
             })}
         </Row>
+
     );
 };
 
